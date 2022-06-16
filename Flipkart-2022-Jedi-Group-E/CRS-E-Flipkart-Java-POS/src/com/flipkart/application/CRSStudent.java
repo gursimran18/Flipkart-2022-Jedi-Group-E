@@ -32,29 +32,27 @@ public class CRSStudent {
 
 				submittedCourses = StudentValidator.submittedCourses(studentId);
 				feeStatus = StudentValidator.getFeeStatus(studentId);
-				System.out.println("\n\n_____________________________________________________________________________");
-				System.out.println("");
-				System.out.println("                              STUDENT DASHBOARD                              ");
-				System.out.println("_____________________________________________________________________________\n");
-				System.out.println("1. View Courses");
-				System.out.println("2. Semester Registration");
-				System.out.println("3. View Registered Courses");
-				System.out.println("4. Make Payment");
-				System.out.println("5. View grade card");
-				System.out.println("6. View notifications");
-				System.out.println("7. Logout");
-				System.out.print("Option : ");
+				System.out.println("-----------------------------------STUDENT DASHBOARD-----------------------------\n");
+				System.out.println("Choose one of the following options: ");
+				System.out.println("1 -> To register for semester");
+				System.out.println("2 -> To View Course List");
+				System.out.println("3 -> To View Registered Courses");
+				System.out.println("4 -> To Make Payment");
+				System.out.println("5 -> To View Notifications");
+				System.out.println("6 -> To View Grade Card");
+				System.out.println("7 -> Logout");
+				System.out.print("Choice : ");
 			
 				choice = sc.nextInt();
 			
 				switch (choice) {
 				
 				case 1:
-					viewCourses();
+					registerSem(studentId);
 					break;
 					
 				case 2: 
-					registerSem(studentId);
+					viewCourses();
 					break;
 					
 				case 3:
@@ -66,11 +64,11 @@ public class CRSStudent {
 					break;
 					
 				case 5:
-					viewGradeCard(studentId);
+					viewNotifications(studentId);
 					break;
 					
 				case 6:
-					viewNotifications(studentId);
+					viewGradeCard(studentId);
 					break;
 					
 				case 7:
@@ -78,7 +76,7 @@ public class CRSStudent {
 					break;			
 					
 				default:
-					System.out.println("Incorrect Choice!");
+					System.out.println("Invalid Entry!");
 			}
 			
 		}while(CRSApplication.loggedIn);
@@ -165,10 +163,7 @@ public class CRSStudent {
 		int choice;
 		do
 		{
-			System.out.println("\n\n_____________________________________________________________________________");
-			System.out.println("");
-			System.out.println("                      SEMESTER REGISTRATION DASHBOARD                        ");
-			System.out.println("_____________________________________________________________________________\n");
+			System.out.println("-----------------------SEMESTER REGISTRATION DASHBOARD-------------------------\n\n");
 			System.out.println("1. View Courses");
 			System.out.println("2. Add Course");
 			System.out.println("3. Drop Course");
@@ -361,10 +356,7 @@ public class CRSStudent {
 		try {			
 			GradeCard gradeCard = studentService.viewGradeCard(studentID);
 			
-			System.out.println("\n\n___________________________________________________________________");
-			System.out.println("");
-			System.out.println("                            GRADE CARD                             ");          
-			System.out.println("___________________________________________________________________\n");
+			System.out.println("----------------------------------GRADE CARD------------------------------------------\n\n");
 			System.out.println("ID : "+studentID+"\t\t\t\t\tSemester : "+gradeCard.getSemester() + "\n");
 //			System.out.println(String.format("%10s %10s ",studentID,"GPA"));
 			System.out.println(String.format("%25s %25s ","COURSE ID","GPA"));

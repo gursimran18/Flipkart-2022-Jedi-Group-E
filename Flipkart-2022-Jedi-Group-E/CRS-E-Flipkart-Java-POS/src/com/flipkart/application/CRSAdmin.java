@@ -23,55 +23,50 @@ public class CRSAdmin {
 		int choice;
 		do {
 
-				System.out.println("\n\n___________________________________________________________________");
-				System.out.println("");
-				System.out.println("                            ADMIN DASHBOARD                        ");          
-				System.out.println("___________________________________________________________________\n");
-				System.out.println("1. View Courses");
-				System.out.println("2. Add Courses");
-				System.out.println("3. Drop Courses");
-				System.out.println("4. Approve Student");
-				System.out.println("5. Add Professor");
-				System.out.println("6. Drop Professor");
-				System.out.println("7. View Professor List");
-				System.out.println("8. Generate Grade Card");
-				System.out.println("9. Logout");
-				System.out.print("Option : ");
-			
+			    System.out.println("---------------------ADMIN DASHBOARD-----------------------------\n\n");
+			    System.out.println("Choose one of the following options: ");
+			    System.out.println("1 -> For Student Approval");
+				System.out.println("2 -> To view Professor List");
+				System.out.println("3 -> To add Professor");
+				System.out.println("4 -> To drop Professor");
+				System.out.println("5 -> To view Course List");
+				System.out.println("6 -> To add Course");
+				System.out.println("7 -> To drop Course ");
+				System.out.println("8 -> To generate GradeCard");
+				System.out.println("9 -> Logout");
 				choice = sc.nextInt();
 			
 				switch (choice) {
 				
 				case 1:
-					// View Courses
-					viewCourses();
+					approveStudent();
 					break;
 					
 				case 2: 
 					// Add Course;
-					addCourse();
+					viewProfessorList();
 					break;
 					
 				case 3:
 					// Drop Course
-					dropCourse();
+					addProfessor();
 					break;
 					
 				case 4:
-					approveStudent();
+					dropProfessor();
 					break;
 					
 				case 5:
-					addProfessor();
+					viewCourses();
 					break;
 					
 				case 6:
 					// View Professor List
-					dropProfessor();
+					addCourse();
 					break;
 					
 				case 7:
-					viewProfessorList();
+					dropCourse();
 					break;
 				
 				case 8:
@@ -84,8 +79,9 @@ public class CRSAdmin {
 					break;			
 					
 				default:
-					System.out.println("Incorrect Choice!");
-			}
+					System.out.println("Invalid Entry");
+			} 
+			    
 			
 		}while(CRSApplication.loggedIn);
 	}
@@ -100,11 +96,11 @@ public class CRSAdmin {
 		
 		if(courseList.size()==0)
 		{
-			System.err.println("No courses in the system");
+			System.err.println("No courses added yet!!");
 			return;
 		}
 		
-		System.out.println(String.format("%20s %20s %20s","COURSE ID","COURSE NAME","PROFESSOR ID" ));
+		System.out.println(String.format("%20s %20s %20s","COURSE ID","COURSE NAME","PROFESSOR ID"));
 		courseList.forEach(CRSStudent::printCourse);
 		
 	}
@@ -115,24 +111,24 @@ public class CRSAdmin {
 	public void addCourse() {
 		// TODO Auto-generated method stub
 		Course course=new Course();
-		System.out.print("Enter the course Id :");
+		System.out.print("Enter the Course ID.....\n");
 		course.setCourseId(sc.nextLine());
 		
 		try {
 			adminService.verifyCourse(course.getCourseId());
-			System.out.print("Enter the course name :");
+			System.out.print("Enter the Course Name......\n");
 			course.setCourseName(sc.nextLine());
-			System.out.print("Enter the course fee :");
+			System.out.print("Enter the Department Name......\n");
+			course.setDepartmentName(sc.nextLine());
+			System.out.print("Enter the Course Fee........ \n");
 			course.setCourseFee(sc.nextFloat());
 			sc.nextLine();
-			System.out.print("Enter the department name :");
-			course.setDepartmentName(sc.nextLine());
 			course.setProfessorId(null);
 			course.setStudentCount(0);
 			System.out.println(adminService.addCourse(course));
 		}
 		catch (CourseAlreadyExistsException e){
-			System.err.println("Error: " + e.getMessage());
+			System.err.println("Error Found: " + e.getMessage());
 		}
 	}
 	
@@ -141,14 +137,14 @@ public class CRSAdmin {
      */
 	public void dropCourse() {
 		// TODO Auto-generated method stub
-		System.out.print("Enter the course Id :");
+		System.out.print("Enter the Course Id.......\n");
 		String courseId=sc.nextLine();
 		try {
 			adminService.dropCourse(courseId);
-			System.out.println("Course successfully dropped");
+			System.out.println("Course has been dropped successfully!!!");
 		}
 		catch(CourseNotFoundException e) {
-			System.err.println("Error: " + e.getMessage());
+			System.err.println("Error Found: " + e.getMessage());
 		}
 		
 	}
@@ -158,27 +154,27 @@ public class CRSAdmin {
      */
 	public void approveStudent() {
 		// TODO Auto-generated method stub
-		System.out.println("List of students to be approved : ");
+		System.out.println("Student entries to be approved by the admin...");
 		List<Student> studentList = adminService.getPendingStudents();
 		
 		if(studentList.size() == 0) {
-			System.err.println("No student left to be approved!");
+			System.err.println("Student Approval List empty....No student left to be approved...");
 			return;
 		}
 		int i=1;
 		
-		System.out.println(String.format("%10s %20s %20s","INDEX","STUDENT ID", "STUDENT NAME"));
+		System.out.println(String.format("%10s %20s %20s","S/No","Student ID", "Student Name"));
 		for(Student student:studentList)
 		{
 			System.out.println(String.format("%10s %20s %20s",i,student.getStudentEnrollmentId(), student.getName()));
 			i++;
 		}
-		System.out.print("Serial number of student to approve: ");
+		System.out.print("Enter the serial number of student to be approved....");
 		int studentIndex=sc.nextInt();
 		
 		if(studentIndex<=0 || studentIndex>=i)
 		{
-			System.err.println("Invalid index... Returning to previous menu");
+			System.err.println("Invalid entry of serial number.....");
 			return;
 		}
 		
@@ -192,27 +188,27 @@ public class CRSAdmin {
 	public void addProfessor() {
 		// TODO Auto-generated method stub
 		Professor newProfessor = new Professor();
-		System.out.print("Enter the professor name :");
+		System.out.print("Enter the Professor Name....");
 		newProfessor.setName(sc.nextLine());
-		System.out.print("Enter email : ");
+		System.out.print("Enter the Email id....");
 		newProfessor.setEmail(sc.nextLine());
-		System.out.print("Enter password : ");
+		System.out.print("Enter Password ");
 		newProfessor.setPassword(sc.nextLine());
+		System.out.print("Enter the department name :");
+		newProfessor.setDepartment(sc.nextLine());
 		System.out.print("Enter the professor salary :");
 		newProfessor.setSalary(sc.nextFloat());
 		sc.nextLine();
-		System.out.print("Enter the department name :");
-		newProfessor.setDepartment(sc.nextLine());
-		System.out.print("Enter the doj :");
-		newProfessor.setDoj(sc.nextLine());
 		System.out.print("Enter the contact number:");
 		newProfessor.setContactNumber(sc.nextLine());
+		System.out.print("Enter the DOJ :");
+		newProfessor.setDoj(sc.nextLine());
 		
 		try {
 			System.out.println(adminService.addProfessor(newProfessor));
 		}
 		catch(EmailAlreadyInUseException e) {
-			System.err.println("Error : " + e.getMessage());
+			System.err.println("Error Found: " + e.getMessage());
 		}
 	}
 	
@@ -225,24 +221,24 @@ public class CRSAdmin {
 		List<Professor> professorList = adminService.viewProfessorList();
 		
 		if(professorList.size() == 0) {
-			System.err.println("No professor in the system!");
+			System.err.println("Empty Professor list!!!!");
 			return ;
 		}
-		System.out.print("Enter the serial number :");
+		System.out.print("Enter the serial number of Professor to be dropped!!!");
 		int index=sc.nextInt();
 		
 		if(index <=0 || index >professorList.size())
 		{
-			System.err.println("Invalid index... Returning to previous menu");
+			System.err.println("Invalid serial number entered!!");
 			return;
 		}
 		
 		try {
 			adminService.dropProfessor(professorList.get(index-1).getProfessorId());
-			System.out.println("Professor dropped successfully");
+			System.out.println("Respective Professor has been dropped successfully");
 		}
 		catch(UserNotFoundException e) {
-			System.err.println("Error : " + e.getMessage());
+			System.err.println("Error Found: " + e.getMessage());
 		}
 	}
 	
@@ -255,13 +251,13 @@ public class CRSAdmin {
 		
 		if(professorList.size()==0)
 		{
-			System.err.println("No professors present in the database");
+			System.err.println("Professor Database Empty!!!");
 			return;
 		}
 		
 		int i=1;
 		
-		System.out.println(String.format("%10s %20s %20s %20s","INDEX","PROFESSOR ID", "PROFESSOR NAME", "DEPARTMENT"));
+		System.out.println(String.format("%10s %20s %20s %20s","S/No","PROFESSOR ID", "PROFESSOR NAME", "DEPARTMENT"));
 		for(Professor professor:professorList)
 		{
 			System.out.println(String.format("%10s %20s %20s %20s",i,professor.getProfessorId(), professor.getName(), professor.getDepartment()));
@@ -277,36 +273,36 @@ public class CRSAdmin {
 		List<Student> studentList = adminService.getPendingGradeStudents();
 		
 		if(studentList.size() == 0) {
-			System.err.println("No more grade cards left to be generated");
+			System.err.println("All the Grade Cards have been generated already....");
 			return;
 		}
 		int i=1;
 		
-		System.out.println(String.format("%10s %20s %20s","INDEX","STUDENT ID", "STUDENT NAME"));
+		System.out.println(String.format("%10s %20s %20s","S/No","Student ID", "Student NAME"));
 		for(Student student:studentList)
 		{
 			System.out.println(String.format("%10s %20s %20s",i,student.getStudentEnrollmentId(), student.getName()));
 			i++;
 		}
 		
-		System.out.print("Enter the student index : ");
+		System.out.print("Enter the serial number of the student:");
 		int index=sc.nextInt();
 		
 		if(index<=0 || index>=i)
 		{
-			System.err.println("Invalid index... Returning to previous menu");
+			System.err.println("Invalid Entry...");
 			return;
 		}
 		
 		String studentId=studentList.get(index-1).getStudentEnrollmentId();
-		System.out.print("Enter the semester : ");
+		System.out.print("Enter the semester...");
 		String semester=sc.next();
 		try {			
 			adminService.generateGradeCard(studentId, semester);
-			System.out.println("GradeCard generated successfully.");
+			System.out.println("GradeCard has been generated successfully....");
 		}
 		catch(GradeNotAllotedException e) {
-			System.err.println("Error  : " + e.getMessage() );
+			System.err.println("Error Found: " + e.getMessage() );
 		}
 	}
 	
