@@ -18,11 +18,25 @@ public class SemesterRegistrationService implements SemesterRegistrationInterfac
 	SemesterRegistrationDaoInterface semesterRegistrationDaoService = new SemesterRegistrationDaoService();
 	private static Logger logger = Logger.getLogger(SemesterRegistrationService.class);
 
+	/**
+	 * method for getting all the courses from course catalog
+	 *
+	 * @return list of course
+	 */
 	@Override
 	public List<Course> viewCourses() {
 		return catalogDaoService.viewCourses();
 	}
 
+	/**
+	 * method for adding course for the student
+	 *
+	 * @param studentId  unique Id to represent a student
+	 * @param courseId  unique Id to represent a course
+	 * @throws throws CourseNotFoundException if course with courseId not in the catalog
+	 * @throws throws CourseCountExceededException if student has already opted 6 courses
+	 * @throws throws CourseAlreadyOptedException if course is already opted by student
+	 */
 	@Override
 	public void addCourse(String studentId, String courseId) throws CourseNotFoundException, CourseCountExceededException, CourseAlreadyOptedException{
 		// TODO Auto-generated method stub
@@ -41,6 +55,15 @@ public class SemesterRegistrationService implements SemesterRegistrationInterfac
 		}
 	}
 
+	/**
+	 * method for dropping course for the student
+	 *
+	 * @param studentId  unique Id to represent a student
+	 * @param courseId  unique Id to represent a course
+	 * @return returns String which represents the status of dropping course
+	 * @throws CourseNotFoundException if courseId not present in the system
+	 * @throws CourseNotOptedException if studentId has not opted courseId
+	 */
 	@Override
 	public String dropCourse(String studentId, String courseId) throws CourseNotFoundException, CourseNotOptedException{
 		// TODO Auto-generated method stub
@@ -52,12 +75,24 @@ public class SemesterRegistrationService implements SemesterRegistrationInterfac
 			throw e;
 		}
 	}
-	
+
+	/**
+	 * method for getting all opted courses by the student
+	 *
+	 * @param studentId  unique Id to represent a student
+	 * @return list of courses opted by the student
+	 */
 	@Override
 	public List<Course> viewOptedCourses(String studentId) {
 		return semesterRegistrationDaoService.viewOptedCourses(studentId);
 	}
 
+	/**
+	 * method for submitting the course choices of the student
+	 *
+	 * @param studentId  unique Id to represent a student
+	 * @return returns String which represents the status of submitting course choices
+	 */
 	@Override
 	public String submitOptedCourses(String studentId) {
 		// TODO Auto-generated method stub

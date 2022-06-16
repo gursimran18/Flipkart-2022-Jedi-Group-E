@@ -26,7 +26,14 @@ public class UserDaoService implements UserDaoInterface {
 	private static Logger logger = Logger.getLogger(UserDaoService.class);
 	public static Connection conn = dbUtil.getConnection();
 
-	
+	/**
+	 * Method to check if a user with given email-id and password exists
+	 *
+	 * @param emailId of the user
+	 * @param password of the user
+	 * @return returns a User containing user info id found in database or returns null
+	 * @throws throws UserNotFoundException if user credentials aren't present in the database
+	 */
 	@Override
 	public User login(String emailId, String password) throws UserNotFoundException{
 		try {
@@ -59,8 +66,13 @@ public class UserDaoService implements UserDaoInterface {
 		}
 	}
 
-	
-	
+
+	/**
+	 * Method to get the name of the student
+	 *
+	 * @param studentId of the student
+	 * @return returns the name of the student
+	 */
 	public String getStudentName(String studentId){
 		try {
 			PreparedStatement ps = conn.prepareStatement(SQLQueries.GET_STUDENT);
@@ -78,8 +90,13 @@ public class UserDaoService implements UserDaoInterface {
 			return null;
 		}
 	}
-	
-	
+
+	/**
+	 * Method to get the name of the professor
+	 *
+	 * @param professorId of the professor
+	 * @return returns the name of the professor
+	 */
 	public String getProfessorName(String professorId){
 		try {
 			PreparedStatement ps = conn.prepareStatement(SQLQueries.GET_PROFESSOR);
@@ -96,7 +113,17 @@ public class UserDaoService implements UserDaoInterface {
 			return null;
 		}
 	}
-	
+
+	/**
+	 * Method to enter a new user in the database
+	 *
+	 * @param name of the user
+	 * @param emailId of the user
+	 * @param password of the user
+	 * @param role of the user
+	 * @return returns a string that indicates if the user is successfully entered in the database
+	 * @throws throws EmailAlreadyInUseException if email is already present in the database
+	 */
 	@Override
 	public String createUser(String name, String email, String password, Roles role) throws EmailAlreadyInUseException{
 
@@ -151,6 +178,19 @@ public class UserDaoService implements UserDaoInterface {
 		}
 	}
 
+
+	/**
+	 * Method to enter a new student in the database
+	 *
+	 * @param name of the user
+	 * @param contact number of the user
+	 * @param emailId of the user
+	 * @param password of the user
+	 * @param branch of the user
+	 * @param batch of the user
+	 * @return returns a string that indicates if the student is successfully entered in the database
+	 * @throws throws EmailAlreadyInUseException if email is already present in the database
+	 */
 	
 	@Override
 	public String registerStudent(String name, String contactNumber, String email, String password, String branch, String batch) throws EmailAlreadyInUseException{
@@ -185,6 +225,15 @@ public class UserDaoService implements UserDaoInterface {
 	}
 
 
+	/**
+	 * Method to update password of the user
+	 *
+	 * @param emailId of the user
+	 * @param old password of the user
+	 * @param new password of the user
+	 * @return returns a string that indicates if the password is changed successfully
+	 * @throws throws UserNotFoundException if user credentials aren't present in the database
+	 */
 	@Override
 	public String updatePassword(String email, String oldPassword, String newPassword) throws UserNotFoundException{
 		try {
