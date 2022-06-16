@@ -25,6 +25,11 @@ public class ProfessorDaoService implements ProfessorDaoInterface {
 	private static Logger logger = Logger.getLogger(ProfessorDaoService.class);
 	public static Connection conn = dbUtil.getConnection();
 
+    /**
+     * Method to obtain a list of courses using SQL commands
+     *
+     * @return returns the courses present in the database
+     */
 	@Override
 	public List<Course> viewCourses() {
         try {
@@ -48,6 +53,16 @@ public class ProfessorDaoService implements ProfessorDaoInterface {
         }
     }
 
+    /**
+     * Method to check if the course is already alloted or not, and then to allot the course using SQL commands
+     *
+     * @param professorId unique Id to represent a professor
+     * @param courseId unique Id to represent a course
+     * @return returns a string that indicates if the course is successfully alloted in the database
+     * @throws CourseNotFoundException if course with courseId not present in the database
+     * @throws CourseNotAvailableException if course with courseId already alloted to some professor
+     * @throws CourseAlreadyIndicatedException if course already selected by professor
+     */
 	@Override
 	public void selectCourse(String professorId, String courseId) throws CourseNotFoundException, CourseNotAvailableException, CourseAlreadyIndicatedException{
         try {
@@ -79,6 +94,12 @@ public class ProfessorDaoService implements ProfessorDaoInterface {
         }
     }
 
+    /**
+     * Method for retrieving the students enrolled in a course using SQL commands
+     *
+     * @param courseId unique Id to represent a course
+     * @return returns a list of strings indicating the students enrolled in a course from the database
+     */
 	@Override
 	public List<Student> viewEnrolledStudents(String courseId)
 	{
@@ -104,6 +125,12 @@ public class ProfessorDaoService implements ProfessorDaoInterface {
         return null;
 	}
 
+    /**
+     * Method for retrieving the ungraded students enrolled in a course using SQL commands
+     *
+     * @param courseId unique Id to represent a course
+     * @return returns a list of strings indicating the ungraded students enrolled in a course from the database
+     */
 	@Override
 	public List<Student> viewUngradedStudents(String courseId)
 	{
@@ -128,7 +155,16 @@ public class ProfessorDaoService implements ProfessorDaoInterface {
         }
         return null;
 	}
-	
+
+    /**
+     * Method for adding the grades of a student for a course in a semester using SQL commands
+     *
+     * @param studentId unique Id to represent a student
+     * @param courseId unique Id to represent a course
+     * @param grade grade point provided for the student enrolled in the course taught by the professor
+     * @param semester indicates the semester
+     * @return returns a string indicating the if the grade was successfully added in the database
+     */
 	@Override
 	public String addGrade(String studentId, String courseId, float grade, String semester) {
         try {

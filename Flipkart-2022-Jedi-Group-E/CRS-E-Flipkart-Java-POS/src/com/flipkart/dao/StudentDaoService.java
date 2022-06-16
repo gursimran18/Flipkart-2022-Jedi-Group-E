@@ -26,7 +26,13 @@ public class StudentDaoService implements StudentDaoInterface {
 
 	private static Logger logger = Logger.getLogger(StudentDaoService.class);
 	public static Connection conn = dbUtil.getConnection();
-	
+
+	/**
+	 * Method to check if a student is approved by the admin
+	 *
+	 * @param student id of the student
+	 * @return returns a boolean indication approval status
+	 */
 	public boolean isApproved(String studentId) 
 	{
 		try {
@@ -47,7 +53,13 @@ public class StudentDaoService implements StudentDaoInterface {
 			return false;
 		}
 	}
-	
+
+	/**
+	 * Method to check the registration status of a student
+	 *
+	 * @param student id of the student
+	 * @return returns true if student has completed the registration
+	 */
 	public boolean submittedCourses(String studentId)
 	{
 		try {
@@ -67,7 +79,13 @@ public class StudentDaoService implements StudentDaoInterface {
 			return false;
 		}
 	}
-	
+
+	/**
+	 * Method to check the payment status of a student
+	 *
+	 * @param student id of the student
+	 * @return returns true if student has completed the payment
+	 */
 	public boolean getFeeStatus(String studentId)
 	{
 		try {
@@ -89,6 +107,12 @@ public class StudentDaoService implements StudentDaoInterface {
 		}
 	}
 
+	/**
+	 * Method to add payment made by a student to the payment database
+	 *
+	 * @param payment object contains the payment details
+	 * @return returns a string indicating the status of the payment
+	 */
 	@Override
 	public String makePayment(Payment payment) {
 		try {
@@ -119,6 +143,11 @@ public class StudentDaoService implements StudentDaoInterface {
 
 	}
 
+	/**
+	 * Method to generate payment notification and store the reference id in the database
+	 *
+	 * @param payment object contains the payment details
+	 */
 	@Override
 	public void generatePaymentNotification(Payment payment)
 	{
@@ -137,7 +166,14 @@ public class StudentDaoService implements StudentDaoInterface {
 		}
 
 	}
-	
+
+	/**
+	 * Method to view grade card for a student
+	 *
+	 * @param student id of the student
+	 * @param course if of the course to be added
+	 * @return returns a grade card for the student
+	 */
 	@Override
 	public List<PaymentNotification> viewNotification(String studentId) {
 		List<PaymentNotification> notificationList = new ArrayList<PaymentNotification>();
@@ -164,8 +200,14 @@ public class StudentDaoService implements StudentDaoInterface {
 		}
 	}
 
-	
-	
+
+	/**
+	 * Method to view grade card for a student
+	 *
+	 * @param student id of the student
+	 * @param course if of the course to be added
+	 * @return returns a grade card for the student
+	 */
 	@Override
 	public GradeCard viewGradeCard(String studentId) throws GradeCardNotGeneratedException{
 		GradeCard gradeCard = new GradeCard();
