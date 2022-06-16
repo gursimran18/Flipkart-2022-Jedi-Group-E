@@ -1,9 +1,11 @@
 /**
- * 
+ *
  */
 package com.crs.flipkart.constants;
 
-
+/**
+ * class where all the commands to execute the corresponding SQL quesries are defined
+ */
 public class SQLQueries {
 	
 	public static final String GET_USER_EMAIL_PASSWORD = "SELECT * FROM user JOIN role on user.userId=role.userId WHERE email = ? AND password = ?";
