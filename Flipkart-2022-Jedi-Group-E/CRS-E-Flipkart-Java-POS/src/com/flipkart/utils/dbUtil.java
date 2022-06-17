@@ -24,12 +24,7 @@ public class dbUtil {
         if (connection != null)
             return connection;
         else {
-            try {
-//            	Properties prop = new Properties();
-//                InputStream inputStream = dbUtil.class.getClassLoader().getResourceAsStream("./config.properties");
-//                prop.load(inputStream);
-//                String driver = prop.getProperty("driver");
-            	   
+            try {  
                 String driver="com.mysql.cj.jdbc.Driver";
                 String url="jdbc:mysql://localhost:3306/crs";
                 String user="root";
