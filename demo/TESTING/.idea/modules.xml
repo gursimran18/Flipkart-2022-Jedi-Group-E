@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/CRS-JEDI-7-FLIPKART-DROPWIZARD/CRS-JEDI-Flipkart-Dropwizard.iml" filepath="$PROJECT_DIR$/CRS-JEDI-7-FLIPKART-DROPWIZARD/CRS-JEDI-Flipkart-Dropwizard.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/TESTING.iml" filepath="$PROJECT_DIR$/.idea/TESTING.iml" />
+    </modules>
+  </component>
+</project>
